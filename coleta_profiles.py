@@ -22,6 +22,8 @@ import requests
 
 import time
 
+import numpy as np
+
 profile_list = open('profile_list.txt', 'a')
 
 
