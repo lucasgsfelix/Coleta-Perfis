@@ -24,6 +24,8 @@ import time
 
 import numpy as np
 
+import tqdm
+
 profile_list = open('profile_list.txt', 'a')
 
 
