@@ -70,11 +70,13 @@ def retrieve_user_profile(link):
 	
 	page = wget_page(link)	
 
+	print(page)
+
+	return
+	
 	profile = cut_page('data-screenName="', '"', page)
 
 	unique_id = cut_page('data-memberId="', '"', page)
-
-	print(profile, unique_id)
 	
 	profile_list.write(unique_id + '\t' + profile + '\t' + link + '\n')
 
