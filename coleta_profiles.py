@@ -68,11 +68,13 @@ def retrieve_user_profile(link):
 
 	global profile_list
 
+	return
+	
 	page = wget_page(link)	
 
-	profile = cut_page('data-screenName="', '"', page.read())
+	profile = cut_page('data-screenName="', '"', page)
 
-	unique_id = cut_page('data-memberId="', '"', page.read())
+	unique_id = cut_page('data-memberId="', '"', page)
 
 	profile_list.write(unique_id + '\t' + profile + '\t' + link + '\n')
 
@@ -93,8 +95,10 @@ if __name__ == '__main__':
 		
 		pool.map(retrieve_user_profile, df['review url crawler'].values)
 
+		break
+		
 		time.sleep(np.random.randint(10, 100, size=1)[0])
-
+		
 
 
 	profile_list.close()
