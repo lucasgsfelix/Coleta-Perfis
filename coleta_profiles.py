@@ -42,7 +42,7 @@ def wget_page(link):
 	## verificar como mudar o ip 
 	#os.system('wget -q -O bind_address ' + gerar_ip_aleatorio() + ' '
 	#		  + link.replace('tripadvisor.com', '').replace('/', '') + ' --directory-prefix=TripPages https://' + link)
-	return requests.get("https://" + link)
+	return requests.get("https://" + link).text
 
 
 def cut_page(start_token, end_token, page):
