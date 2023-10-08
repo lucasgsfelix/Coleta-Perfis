@@ -67,8 +67,6 @@ def cut_page(start_token, end_token, page):
 def retrieve_user_profile(link):
 
 	global profile_list
-
-	return
 	
 	page = wget_page(link)	
 
@@ -76,6 +74,8 @@ def retrieve_user_profile(link):
 
 	unique_id = cut_page('data-memberId="', '"', page)
 
+	print(profile, unique_id)
+	
 	profile_list.write(unique_id + '\t' + profile + '\t' + link + '\n')
 
 	profile_list.flush()
