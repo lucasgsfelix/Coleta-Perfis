@@ -90,8 +90,6 @@ if __name__ == '__main__':
 	pool = Pool(processes=num_cpus)
 
 	for df in tqdm.tqdm(pd.read_table("profile_links.csv", sep=';', chunksize=1000)):
-
-		print(df)
 		
 		pool.map(retrieve_user_profile, df['review url crawler'].values)
 
