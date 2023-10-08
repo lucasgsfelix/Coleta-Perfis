@@ -69,10 +69,6 @@ def retrieve_user_profile(link):
 	global profile_list
 	
 	page = wget_page(link)	
-
-	print("OIO")
-
-	return
 	
 	profile = cut_page('data-screenName="', '"', page)
 
@@ -91,14 +87,12 @@ if __name__ == '__main__':
 
 	num_cpus = multiprocessing.cpu_count()
 
-	pool = Pool(processes=1)
+	pool = Pool(processes=num_cpus)
 
 	for df in tqdm.tqdm(pd.read_table("profile_links.csv", sep=';', chunksize=1000)):
 		
 		pool.map(retrieve_user_profile, df['review url crawler'].values)
 
-		break
-		
 		time.sleep(np.random.randint(10, 100, size=1)[0])
 		
 
