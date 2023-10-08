@@ -70,7 +70,7 @@ def retrieve_user_profile(link):
 	
 	page = wget_page(link)	
 
-	print(page)
+	print("OIO")
 
 	return
 	
