@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
 	num_cpus = multiprocessing.cpu_count()
 
-	pool = Pool(processes=num_cpus)
+	pool = Pool(processes=1)
 
 	for df in tqdm.tqdm(pd.read_table("profile_links.csv", sep=';', chunksize=1000)):
 		
