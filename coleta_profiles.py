@@ -26,6 +26,7 @@ import numpy as np
 
 import tqdm
 
+
 profile_list = open('profile_list.txt', 'a')
 
 
@@ -40,9 +41,8 @@ def wget_page(link):
 
 	## usar aqui a biblioteca requests
 	## verificar como mudar o ip 
-	#os.system('wget -q -O bind_address ' + gerar_ip_aleatorio() + ' '
-	#		  + link.replace('tripadvisor.com', '').replace('/', '') + ' --directory-prefix=TripPages https://' + link)
-	return requests.get("https://" + link).text
+	os.system('wget -q -O bind_address ' + gerar_ip_aleatorio() + ' '
+			  + link.replace('tripadvisor.com', '').replace('/', '') + ' --directory-prefix=TripPages https://' + link)
 
 
 def cut_page(start_token, end_token, page):
@@ -67,16 +67,18 @@ def cut_page(start_token, end_token, page):
 def retrieve_user_profile(link):
 
 	global profile_list
-	
-	page = wget_page(link)	
-	
-	profile = cut_page('data-screenName="', '"', page)
 
-	unique_id = cut_page('data-memberId="', '"', page)
-	
-	profile_list.write(unique_id + '\t' + profile + '\t' + link + '\n')
+	page = wget_page(link)
 
-	profile_list.flush()
+	with open(link.replace('tripadvisor.com', '').replace('/', ''), 'r') as page:
+
+		profile = cut_page('data-screenName="', '"', page.read())
+
+		unique_id = cut_page('data-memberId="', '"', page.read())
+
+		profile_list.write(unique_id + '\t' + profile + '\t' + link + '\n')
+
+		profile_list.flush()
 
 
 	os.remove(link.replace('tripadvisor.com', '').replace('/', ''))
@@ -90,11 +92,19 @@ if __name__ == '__main__':
 	pool = Pool(processes=num_cpus)
 
 	for df in tqdm.tqdm(pd.read_table("profile_links.csv", sep=';', chunksize=1000)):
-		
+
 		pool.map(retrieve_user_profile, df['review url crawler'].values)
 
-		time.sleep(np.random.randint(10, 100, size=1)[0])
-		
+		sleep_time = np.random.randint(10, 100, size=1)[0]
+
+		print("Time to sleep ", sleep_time)
+
+		exit()
+
+		time.sleep(sleep_time)
+
+		break
+
 
 
 	profile_list.close()
